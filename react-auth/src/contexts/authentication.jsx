@@ -26,22 +26,52 @@ function AuthProvider(props){
     )
 
     //  link ไป login page
-    // navigate("/login");
+    navigate("/login");
   }
 
   // make a login request
-  // const login = async (data) => {
-  //   try{
+  const login = async (data) => {
+    try{
+      /* เซตค่า state */
+      setState({ ...state, error: null, loading: true });
 
-  //   }
-  //   catch(error){
-  //     setState({
-  //       ...State,
-  //       error: error.response.data.message,
-  //       l
-  //     })
-  //   }
-  // }
+      /* axios ใช้ method post ส่ง parameter 2 ค่า 
+      1. endpoint 2. data คือ ข้อมูลที่ส่ง */
+      const result = await axios.post(
+        "http://localhost:4000/auth/login", data);
+
+      // เข้าถึงค่า token เเละเก็บไว้ในตัวเเปร token
+      const token = result.data.token;
+
+      /* เก็บ token ไว้ใน localStorage */
+      localStorage.setItem("token", token);
+
+      // การถอดรหัส token ด้วย jwtDecode
+      const userDataFromToken = jwtDecode(token);
+
+      /* การเก็บข้อมูลที่ได้ จาก token ลงใน state */
+      setState({ ...state, user: userDataFromToken });
+
+      /* นำไปใน path "/" */
+      navigate("/");
+    }
+
+    // ถ้า error state คงค่าเดิม เเละส่ง error message เเละ loading false
+    catch(error){
+      setState({
+        ...state,
+        error: error.response.data.message,
+        loading: false
+        
+      })
+    }
+  }
+
+  // clear the token in localStorage and the user data
+  const logout = () => {
+    localStorage.removeItem("token");
+    setState({ ...state, user: null, error: false })
+  }
 
   // ตรวจสอบว่ามีข้อมูล token ใน localStorage หรือไม่ ถ้ามีส่งค่า
   // true ถ้าไม่มี ส่งค่า false
@@ -49,7 +79,7 @@ function AuthProvider(props){
 
   return (
     <AuthContext.Provider
-      value={{ state, register, isAuthenticated }}
+      value={{ state, register, login, logout, isAuthenticated }}
     >
       {props.children}
     </AuthContext.Provider>

@@ -2,3 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.spinAnimate {
+  animation: spin 1s ease-in infinite;
+}
+
+@keyframes spin {
+  from {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+}
+

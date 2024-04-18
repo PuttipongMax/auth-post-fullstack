@@ -1,14 +1,18 @@
 import { useState } from "react";
 import { useAuth } from "../contexts/authentication";
+import { GoDotFill } from "react-icons/go";
 
+import Loading from "../components/Loading";
 
 function RegisterPage() {
     const [ username, setUsername ] = useState("");
     const [ firstName, setFirstName ] = useState("");
     const [ lastName, setLastName ] = useState("");
     const [ password, setPassword ] = useState("");
-
     const [ avatars, setAvatars ] = useState({}); // image
+    
+    const [show, setShow] = useState(null);
+    const [hover, setHover] = useState(false);
 
     const { register } = useAuth();
 
@@ -66,7 +70,8 @@ function RegisterPage() {
                         onChange={(e) => setUsername(e.target.value)}
                         value={username}
                         className="text-stone-700 py-2 rounded-lg 
-                         outline-transparent border-[2px] w-[88%] lg:w-4/5"
+                         outline-transparent border-[2px] w-[88%] 
+                         pl-4 lg:w-4/5"
                         /> 
                     </div>           
                 </div>
@@ -82,7 +87,8 @@ function RegisterPage() {
                         onChange={(e) => setPassword(e.target.value)}
                         value={password}
                         className="text-stone-700 py-2 rounded-lg 
-                        outline-transparent border-[2px] w-[88%] lg:w-4/5"
+                        outline-transparent border-[2px] w-[88%]
+                        pl-4 lg:w-4/5"
                         />
                     </div>
                 </div>
@@ -98,7 +104,8 @@ function RegisterPage() {
                         onChange={(e) => setFirstName(e.target.value)}
                         value={firstName}
                         className="text-stone-700 py-2 rounded-lg 
-                        outline-transparent border-[2px] w-[88%] lg:w-4/5"
+                        outline-transparent border-[2px] w-[88%]
+                        pl-4 lg:w-4/5"
                         />
                     </div>
                 </div>
@@ -114,42 +121,63 @@ function RegisterPage() {
                         onChange={(e) => setLastName(e.target.value)}
                         value={lastName}
                         className="text-stone-700 py-2 rounded-lg 
-                        outline-transparent border-[2px] w-[88%] lg:w-4/5"
+                        outline-transparent border-[2px] w-[88%] 
+                        pl-4 lg:w-4/5"
                         />
                     </div>
                 </div>
 
                 <div className="flex flex-col space-y-2">
-                <label>
+                    <label className="text-2xl">
                         Avatar
-                        <input
-                        id="avatar"
-                        name="avatar"
-                        type="file"
-                        multiple
-                        onChange={handleFileChange}
+                    </label>
+
+                    <label 
+                    className={` mr-[10px] w-[180px] bg-red-400 
+                    h-[40px] flex justify-center items-center cursor-pointer 
+                    ${show ? 'hidden' : ''}`} 
+                    onClick={() => setShow(true)}
+                    onMouseEnter={() => setHover(true)}
+                    onMouseLeave={() => setHover(false)}
+                    >
+                        <h1 
+                        className={`${hover ? "text-md text-stone-200" : "text-[20px]"}`}
+                        >
+                            UPLOAD IMAGE
+                        </h1>
+                        {
+                            [...Array(3)].map((_, i) => (
+                                <div className="mt-[6px]">
+                                <GoDotFill
+                                className={`${hover ? "spinAnimate text-stone-200" : "hidden"} text-sm cursor-pointer`}
+                                key={i}
+                                />
+                                </div>
+                            ))
+                        }
+                        <input id="avatar" name="avatar" type="file" 
+                        multiple accept=".jpeg, .jpg, .png, .webp, .svg" 
+                        onChange={handleFileChange} 
+                        className="hidden" 
                         />
                     </label>
-                    <div className="image-list-preview-container">
+
+                    <div className={`${show ? '' : 'hidden'}`}>
                         {Object.keys(avatars).map((avatarKey) => {
                             const file = avatars[avatarKey];
                             return (
                                 <div key={avatarKey} className="w-[60%] h-[60%]">
-                                    <img
-                                    className="image-preview"
-                                    src={URL.createObjectURL(file)}
-                                    alt={file.name}
-                                    />
-                                    <button
-                                    className="image-remove-button"
-                                    onClick={(e) => handleRemoveImage(e, avatarKey)}
-                                    >
+                                    <img className="w-[250px] h-[250px]" src={URL.createObjectURL(file)} alt={file.name} />
+                                    <button 
+                                    onClick={(e) => (handleRemoveImage(e, avatarKey), setShow())}>                      
                                         x
                                     </button>
                                 </div>
-                            )
+                            );
                         })}
                     </div>
+
+
                 </div>
 
                 <div className="">
