@@ -1,8 +1,11 @@
 import React from 'react'
+import CreatePostForm from '../components/CreatePostForm'
 
 function CreatePostPage() {
   return (
-    <div>CreatePostPage</div>
+    <div>
+      <CreatePostForm />
+    </div>
   )
 }
 

@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
-// import jwtDecode from "jwt-decode"
+import { jwtDecode } from "jwt-decode"
 
 // สร้าง useContext
 const AuthContext = React.createContext();
@@ -62,8 +62,7 @@ function AuthProvider(props){
         ...state,
         error: error.response.data.message,
         loading: false
-        
-      })
+      });
     }
   }
 

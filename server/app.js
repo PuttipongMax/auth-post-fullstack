@@ -6,6 +6,7 @@ import cloudinary from "cloudinary";
 
 import { client } from "./utils/db.js";
 import authRouter from "./apps/auth.js";
+import postRouter from "./apps/posts.js";
 
 async function init(){
   // dotenv ใช้เพื่อโหลดค่าจากไฟล์ .env 
@@ -37,7 +38,7 @@ async function init(){
 
   // กำหนด router localhost://5000/auth endpoint สำหรับ auth
   app.use("/auth", authRouter);
-  // app.use("/posts", postRouter);
+  app.use("/posts", postRouter);
 
   app.get("/", (req, res) => {
     res.send("Hello World")
