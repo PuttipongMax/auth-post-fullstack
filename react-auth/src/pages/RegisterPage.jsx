@@ -147,11 +147,16 @@ function RegisterPage() {
                         </h1>
                         {
                             [...Array(3)].map((_, i) => (
-                                <div className="mt-[6px]">
-                                <GoDotFill
-                                className={`${hover ? "spinAnimate text-stone-200" : "hidden"} text-sm cursor-pointer`}
+                                <div 
                                 key={i}
-                                />
+                                className="mt-[6px]">
+                                    <GoDotFill
+                                    className={`
+                                    ${hover 
+                                    ? "spinAnimate text-stone-200" 
+                                    : "hidden"} text-sm cursor-pointer
+                                    `}                     
+                                    />
                                 </div>
                             ))
                         }

@@ -12,7 +12,7 @@ export const protect = async(req, res, next) => {
   // ถ้าตรงตามเงื่อนไข คืนค่า 2 ค่า
   // 1. status 401 
   // 2. ข้อความ "Token has invalid format"
-  if(!token || !token.startsWith("Bearer")){
+  if(!token || !token.startsWith("Bearer ")){
     return res.status(401).json({
       message: "Token has invalid format",
     });
