@@ -107,7 +107,7 @@ authRouter.post("/login", async(req, res) => {
     // secret key ใช้ในการเข้ารหัส
     process.env.SECRET_KEY,
     {
-      expiresIn: 900000, // 15 นาที
+      expiresIn: 900000, // 15 นาที 
     }
   );
 

@@ -1,8 +1,11 @@
 import React from 'react'
+import EditPostForm from '../components/EditPostForm'
 
 function EditPostPage() {
   return (
-    <div>EditPostPage</div>
+    <div>
+      <EditPostForm />
+    </div>
   )
 }
 

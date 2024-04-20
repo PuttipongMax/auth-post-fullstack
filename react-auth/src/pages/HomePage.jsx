@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/authentication";
 import usePosts from '../hooks/usePosts';
 import getPublishedDate from '../utils/getPublishedDate';
+import DeleteButton from '../components/DeleteButton';
 
 function HomePage() {
   const navigate = useNavigate();
@@ -29,7 +30,7 @@ function HomePage() {
   }, [status, keywords, page]);
 
   return (
-    <div className="w-full h-screen bg-[cornflowerblue]">
+    <div className="w-full bg-[cornflowerblue]">
       <div className='w-full mx-auto px-12 sm:px-24'>
 
         <div className='flex flex-col text-center '>
@@ -98,34 +99,33 @@ function HomePage() {
                 <h2>
                   Published Time: {getPublishedDate(post.published_at)}
                 </h2>
-                <div>
-                  <button
-                  className=''
+                <div className='flex justify-around'>
+                  <button             
                   onClick={() => navigate(`/post/view/${post._id}`)}
+                   className='py-2 px-4 bg-green-300 rounded-md text-white'
                   >
                     View post
                   </button>
-                  <button
-                  className=''
+                  <button         
                   onClick={() => navigate(`/post/edit/${post._id}`)}
+                  className='py-2 px-4 bg-red-300 rounded-md'
                   >
                     Edit post
                   </button>
                 </div>
-
-                <button
-                onClick={() => deletePost(post._id)}
-                className=''
-                >
-                  x
-                </button>
+              
+                <DeleteButton
+                  postId={post._id}
+                  deletePost={deletePost}
+                />
+                
               </div>
             )
           })}
           {isError ? <h1>Request failed</h1> : null}
           {isLoading ? <h1>Loading ....</h1> : null}
         </div>
-
+        
         <div className="pagination flex flex-row justify-center
         items-center">
           {page > 1 ? (
@@ -145,6 +145,9 @@ function HomePage() {
               Next
             </button>
           ) : null}
+        </div>
+        <div className=''>
+          {page} / {totalPages}
         </div>
 
       </div> 

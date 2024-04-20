@@ -1,23 +1,29 @@
 import { useState } from "react";
 import usePosts from "../hooks/usePosts";
+import { Link } from 'react-router-dom'
 
 function CreatePostForm(){
-  const { createPost } = usePosts()
+  const { createPost, errorMessage } = usePosts()
   const [title, setTitle] = useState("")
   const [content, setContent] = useState("")
   const status = "published"
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    createPost({
-      title,
-      content,
-      status,
-    })
+    if(title !== "" && content !== ""){
+      createPost({
+        title,
+        content,
+        status,
+      })
+    }
+    else{
+      return errorMessage
+    }
   }
 
   return (
-    <div className="w-full h-screen bg-[cornflowerblue]">
+    <div className="w-full bg-[cornflowerblue]">
       <form
       onSubmit={handleSubmit}
       className="w-full mx-auto px-12 sm:px-24"
@@ -52,8 +58,19 @@ function CreatePostForm(){
             />      
           </div>
 
-          <div className={`bg-red-400 py-2 px-4 size-fit`}>
-                <button type="submit">Create</button>
+          <div className={`flex justify-around items-center`}>
+              <button 
+              type="submit"
+              className="bg-red-400 py-2 px-4 size-fit"
+              >
+                Create
+              </button>
+              <Link
+              to="/"
+              className='py-2 px-4 bg-green-400'
+              >
+                Back to Home
+              </Link>
           </div>
         </div>
 

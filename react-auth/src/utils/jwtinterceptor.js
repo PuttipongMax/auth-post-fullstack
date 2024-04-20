@@ -19,14 +19,14 @@ function jwtInterceptor(){
 
     return req;
   });
-
+ 
   /* interceptors นี้ รอรับ response จาก server โดยมีค่า parameter
   2 ค่า คือ req, error หากไม่มี error จะคืนค่า req ไปที่ caller
   เเต่ถ้ามี error ตาม if-condition จะลบ token ออกจาก localstorage
   เเละ link ไปที่ หน้า homepage */
   axios.interceptors.response.use((req) => {
     return req;
-  }, (error) => {
+  }, (error) => { 
     if(
       error.response.status === 401 &&
       error.response.statusText === "Unauthorized"
