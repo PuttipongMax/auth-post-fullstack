@@ -4,7 +4,7 @@ import fs from "fs/promises";
 const cloudinaryUpload = async (files) => {
   const fileUrl = [];
 
-  // 
+  //  
   for(let file of files.avatar){
     // const file = files.avatar[i];
     const result = await cloudinary.uploader.upload(
@@ -13,7 +13,7 @@ const cloudinaryUpload = async (files) => {
         type: "private",
     })
     fileUrl.push({
-      urls: result.secure_url,
+      urls: result.secure_url, 
       publicIds: result.public_id
     })
     await fs.unlink(file.path)
@@ -22,5 +22,5 @@ const cloudinaryUpload = async (files) => {
 }
 
 // console.log(cloudinaryUpload());
-
+ 
 export { cloudinaryUpload };

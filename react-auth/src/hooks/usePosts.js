@@ -9,6 +9,7 @@ const usePosts = () => {
   const [totalPages, setTotalPages] = useState(0);
   const [isError, setIsError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const getPosts = async(input) => {
 
@@ -42,7 +43,8 @@ const usePosts = () => {
       setTotalPages(results.data.totalPages);
 
       /* set Loading เป็น false */
-      setIsLoading(false);
+      setIsLoading(false); 
+
     }
 
     /* ถ้าไม่สำเร็จให้ setIsError เป็น true
@@ -121,6 +123,7 @@ const usePosts = () => {
     catch(error){
       setIsError(true);
       setIsLoading(false);
+      setErrorMessage(error);
     }
   }
 
@@ -158,6 +161,7 @@ const usePosts = () => {
     deletePost,
     isError,
     isLoading,
+    errorMessage,
   }
 }
 
